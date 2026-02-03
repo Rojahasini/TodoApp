@@ -1,31 +1,51 @@
-# NGK Todo Application
+# 📝 Roja's TODO App
 
-This project is a Todo application built using Python, SQLite, and Streamlit, developed as part of the NGK Internship technical assignment.
+A smart, AI-powered task management application built with **Python** and **Streamlit**. 
+This app combines a modern, responsive UI with AI capabilities to help you organize, prioritize, and track your daily tasks efficiently.
 
-## Features
-- Task creation, completion, and deletion
-- Persistent storage using SQLite
-- Clean Streamlit-based UI
+![Python](https://img.shields.io/badge/Python-3.9%2B-blue)
+![Streamlit](https://img.shields.io/badge/Streamlit-1.31%2B-ff4b4b)
+![Status](https://img.shields.io/badge/Status-Active-success)
 
-## Generative AI Features
-1. Natural language task creation
-2. AI-based task prioritization
-3. AI-generated daily productivity summary
+## ✨ Features
 
-## Architecture
-- Streamlit frontend
-- Python backend logic
-- SQLite database
-- OpenAI API for GenAI features
+### 🎨 Modern UI & Theming
+* **Dual Theme Support:** Seamless toggle between a clean **Light Mode** (Slate/White) and a sleek **Dark Mode** (Deep Blue/Grey).
+* **Responsive Design:** Optimized for various screen sizes with custom CSS styling.
 
-## How to Run
-1. Install dependencies:
-   pip install -r requirements.txt
+### 📋 Task Management
+* **Dashboard View:** Separate tabs for **Pending** (🕒) and **Achieved** (✅) tasks.
+* **CRUD Operations:** Easily Add, Delete, and Mark tasks as Done.
+* **Undo Functionality:** Accidentally marked a task as done? Move it back to pending with one click.
+* **Calendar Integration:** Intuitive date picker for setting deadlines.
 
-2. Add OpenAI API key in `.env`:
-   OPENAI_API_KEY=your_key_here
+### 🤖 AI Buddy (Roja AI)
+* **AI Task Creation:** Let AI suggest tasks based on your goals.
+* **Prioritization:** AI analyzes your list to suggest what to tackle first.
+* **Daily Summaries:** Get an AI-generated summary of your workload.
+* *(Note: AI features require an API key setup).*
 
-3. Run the app:
-   streamlit run app.py
+---
 
-Note: The API key is not included in the source code as per instructions.
+## 📸 Screenshots
+
+| Light Mode Dashboard | Dark Mode Dashboard |
+|:---:|:---:|
+| ![Light Mode](image_e2383b.png) | ![Dark Mode](image_e2385a.png) |
+
+| AI Assistant | Task Creation |
+|:---:|:---:|
+| ![AI Buddy](image_e24682.png) | ![Create Task](image_e251e3.png) |
+
+*(Note: If your images have different filenames, update the text inside the parentheses above).*
+
+---
+
+## 🚀 Installation & Setup
+
+Follow these steps to run the app locally on your machine.
+
+### 1. Clone the Repository
+```bash
+git clone [https://github.com/Rojahasini/TodoApp.git](https://github.com/Rojahasini/TodoApp.git)
+cd TodoApp
