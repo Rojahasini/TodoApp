@@ -3,32 +3,32 @@ import google.generativeai as genai
 from dotenv import load_dotenv
 import json
 
-# Load environment variables
+# Grab the keys from my .env file
 load_dotenv()
 
-# Configure the Google AI
+# Set up the Gemini API
 api_key = os.getenv("GEMINI_API_KEY")
 genai.configure(api_key=api_key)
 
 def get_gemini_response(prompt):
-    """Helper function to talk to Gemini safely"""
+    """My wrapper function to handle the AI calls and catch errors."""
     if not api_key:
-        return "Error: API Key not found. Check your .env file."
+        return "Error: I couldn't find the API Key. Need to check .env."
         
     try:
-        # --- UPDATED MODEL NAME HERE ---
-        # We are using the model found in your specific list:
+        # Using the flash-lite model because it's fast and available
         model = genai.GenerativeModel('gemini-2.5-flash-lite') 
         response = model.generate_content(prompt)
         
         if not response.text:
-            return "Error: Empty response from AI."
+            return "Error: AI gave me an empty response."
             
         return response.text
     except Exception as e:
         return f"Error: {str(e)}"
 
 def ai_create_tasks(user_input):
+    # Ask AI to parse the natural language into a JSON list
     prompt = f"""
     You are a task management assistant.
     Extract tasks from the user's input and return them as a JSON list.
@@ -42,11 +42,12 @@ def ai_create_tasks(user_input):
     """
     response = get_gemini_response(prompt)
     
-    # Clean up response
+    # Sometimes Gemini adds markdown backticks, so I'll strip them just in case
     clean_response = response.replace("```json", "").replace("```", "").strip()
     return clean_response
 
 def ai_prioritize_tasks(tasks):
+    # Logic to ask AI for prioritization advice
     prompt = f"""
     You are a productivity expert.
     Given these tasks, prioritize them by urgency and importance.
@@ -58,6 +59,7 @@ def ai_prioritize_tasks(tasks):
     return get_gemini_response(prompt)
 
 def ai_daily_summary(tasks):
+    # Logic to get a nice summary and quote
     prompt = f"""
     Create a friendly daily summary of these tasks.
     Include a motivational quote.
