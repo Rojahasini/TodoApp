@@ -4,14 +4,10 @@ import datetime
 import ai_utils  # Importing your Gemini Brain
 import json
 
-# ======================================================
-# App Config
-# ======================================================
+# Configure the main page settings like title and icon
 st.set_page_config(page_title="Roja's TODO App", page_icon="📝", layout="wide")
 
-# ======================================================
-# Session State
-# ======================================================
+# Initialize session state to track the current page and settings
 if "page" not in st.session_state:
     st.session_state.page = "Dashboard"
 if "ai_mode" not in st.session_state:
@@ -24,9 +20,7 @@ if "theme" not in st.session_state:
 def toggle_theme():
     st.session_state.theme = "dark" if st.session_state.theme == "light" else "light"
 
-# ======================================================
-# Theme Colors
-# ======================================================
+# Define color palettes for light and dark modes
 if st.session_state.theme == "light":
     BG_COLOR = "#F8FAFC"        
     CARD_BG = "#FFFFFF"         
@@ -52,9 +46,7 @@ else:
     SHADOW = "0 4px 6px -1px rgba(0, 0, 0, 0.2)"
     CARET_COLOR = "#F8FAFC"
 
-# ======================================================
-# CSS Styling
-# ======================================================
+# Apply custom CSS to style buttons, cards, and inputs
 st.markdown(f"""
 <style>
     .stApp {{ background-color: {BG_COLOR}; color: {TEXT_COLOR}; }}
@@ -84,15 +76,13 @@ st.markdown(f"""
 </style>
 """, unsafe_allow_html=True)
 
-# Init Database
+# Make sure the database exists
 try:
     database.create_tables()
 except:
     pass
 
-# ======================================================
-# Header
-# ======================================================
+# Create the top navigation bar with title and buttons
 st.markdown('<div class="header">', unsafe_allow_html=True)
 c1, c2, c3, c4, c5 = st.columns([4, 1.2, 1.2, 2, 0.6])
 
@@ -119,9 +109,7 @@ with c5:
         st.rerun()
 st.markdown("</div>", unsafe_allow_html=True)
 
-# ======================================================
-# DASHBOARD
-# ======================================================
+# Function to display the main dashboard with task lists
 def show_dashboard():
     st.markdown("### 📊 Task Dashboard")
     st.markdown("---")
@@ -169,9 +157,7 @@ def show_dashboard():
                         st.rerun()
                 st.markdown("</div>", unsafe_allow_html=True)
 
-# ======================================================
-# ADD TASK
-# ======================================================
+# Function to display the add task form
 def show_add_task():
     st.markdown('<div class="card">', unsafe_allow_html=True)
     st.markdown("### ➕ Create New Task")
@@ -189,9 +175,7 @@ def show_add_task():
                 st.warning("Please add a title.")
     st.markdown("</div>", unsafe_allow_html=True)
 
-# ======================================================
-# AI FEATURES
-# ======================================================
+# Function to handle AI features like task generation and prioritization
 def show_ai():
     st.markdown('<div class="card">', unsafe_allow_html=True)
     st.markdown(f"### 🤖 {st.session_state.ai_mode}")
@@ -273,9 +257,7 @@ def show_ai():
         st.rerun()
     st.markdown("</div>", unsafe_allow_html=True)
 
-# ======================================================
-# Router
-# ======================================================
+# Determine which page to show based on session state
 if st.session_state.page == "Dashboard":
     show_dashboard()
 elif st.session_state.page == "Add Task":
