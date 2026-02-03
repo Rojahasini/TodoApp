@@ -1,10 +1,16 @@
-```markdown
-# 📝 Roja's TODO App
 
+### 📝 Roja's TODO App
 A smart, AI-powered task management application built with **Python**, **Streamlit**, and **Google Gemini**. 
 This app combines a modern, responsive UI with advanced AI capabilities to help you organize, prioritize, and track your daily tasks efficiently.
 
-## ✨ Features
+![Python](https://img.shields.io/badge/Python-3.9%2B-blue)
+![Streamlit](https://img.shields.io/badge/Streamlit-1.31%2B-ff4b4b)
+![AI](https://img.shields.io/badge/AI-Google%20Gemini-orange)
+![Status](https://img.shields.io/badge/Status-Active-success)
+
+
+
+### ✨ Features
 
 ### 🎨 Modern UI & Theming
 * **Dual Theme Support:** Seamless toggle between a clean **Light Mode** (Slate/White) and a sleek **Dark Mode** (Deep Blue/Grey).
@@ -21,20 +27,6 @@ This app combines a modern, responsive UI with advanced AI capabilities to help 
 * **🚀 AI Prioritization:** The AI analyzes your pending list and suggests the most urgent tasks to focus on first.
 * **📅 Daily Summaries:** Get a friendly, motivational summary of your progress and remaining work.
 * *(Powered by the fast and efficient `gemini-2.5-flash-lite` model)*.
-
----
-
-## 📸 Screenshots
-
-| Light Mode Dashboard | Dark Mode Dashboard |
-|:---:|:---:|
-| ![Light Mode](image_e2383b.png) | ![Dark Mode](image_e2385a.png) |
-
-| AI Task Generator | AI Prioritization |
-|:---:|:---:|
-| ![AI Buddy](image_e24682.png) | ![Create Task](image_e251e3.png) |
-
-*(Note: These images correspond to the files uploaded to your repository).*
 
 ---
 
