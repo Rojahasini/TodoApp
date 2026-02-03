@@ -31,15 +31,12 @@ This app combines a modern, responsive UI with AI capabilities to help you organ
 
 | Light Mode Dashboard | Dark Mode Dashboard |
 |:---:|:---:|
-| ![Light Mode](image_e2383b.png) | ![Dark Mode](image_e2385a.png) |
+| ![Light Mode](DashBoardHightlighted.png) | ![Dark Mode](DashboardEmpty.png) |
 
 | AI Assistant | Task Creation |
 |:---:|:---:|
-| ![AI Buddy](image_e24682.png) | ![Create Task](image_e251e3.png) |
+| ![AI Buddy](AI_Tab.png) | ![Create Task](AddTask.png) |
 
-*(Note: If your images have different filenames, update the text inside the parentheses above).*
-
----
 
 ## 🚀 Installation & Setup
 
@@ -49,3 +46,4 @@ Follow these steps to run the app locally on your machine.
 ```bash
 git clone [https://github.com/Rojahasini/TodoApp.git](https://github.com/Rojahasini/TodoApp.git)
 cd TodoApp
+
