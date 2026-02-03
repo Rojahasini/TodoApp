@@ -1,11 +1,12 @@
-
+```markdown
 # 📝 Roja's TODO App
 
-A smart, AI-powered task management application built with **Python** and **Streamlit**. 
-This app combines a modern, responsive UI with AI capabilities to help you organize, prioritize, and track your daily tasks efficiently.
+A smart, AI-powered task management application built with **Python**, **Streamlit**, and **Google Gemini**. 
+This app combines a modern, responsive UI with advanced AI capabilities to help you organize, prioritize, and track your daily tasks efficiently.
 
 ![Python](https://img.shields.io/badge/Python-3.9%2B-blue)
 ![Streamlit](https://img.shields.io/badge/Streamlit-1.31%2B-ff4b4b)
+![AI](https://img.shields.io/badge/AI-Google%20Gemini-orange)
 ![Status](https://img.shields.io/badge/Status-Active-success)
 
 ## ✨ Features
@@ -18,13 +19,27 @@ This app combines a modern, responsive UI with AI capabilities to help you organ
 * **Dashboard View:** Separate tabs for **Pending** (🕒) and **Achieved** (✅) tasks.
 * **CRUD Operations:** Easily Add, Delete, and Mark tasks as Done.
 * **Undo Functionality:** Accidentally marked a task as done? Move it back to pending with one click.
-* **Calendar Integration:** Intuitive date picker for setting deadlines.
+* **Smart Dates:** Tasks automatically sort by due dates.
 
-### 🤖 AI Buddy (Roja AI)
-* **AI Task Creation:** Let AI suggest tasks based on your goals.
-* **Prioritization:** AI analyzes your list to suggest what to tackle first.
-* **Daily Summaries:** Get an AI-generated summary of your workload.
-* *(Note: AI features require an API key setup).*
+### 🤖 AI Buddy (Powered by Google Gemini)
+* **✨ AI Task Creation:** Describe your goal (e.g., "Plan a surprise party"), and the AI generates a structured list of tasks with due dates automatically.
+* **🚀 AI Prioritization:** The AI analyzes your pending list and suggests the most urgent tasks to focus on first.
+* **📅 Daily Summaries:** Get a friendly, motivational summary of your progress and remaining work.
+* *(Powered by the fast and efficient `gemini-2.5-flash-lite` model)*.
+
+---
+
+## 📸 Screenshots
+
+| Light Mode Dashboard | Dark Mode Dashboard |
+|:---:|:---:|
+| ![Light Mode](image_e2383b.png) | ![Dark Mode](image_e2385a.png) |
+
+| AI Task Generator | AI Prioritization |
+|:---:|:---:|
+| ![AI Buddy](image_e24682.png) | ![Create Task](image_e251e3.png) |
+
+*(Note: These images correspond to the files uploaded to your repository).*
 
 ---
 
@@ -39,7 +54,7 @@ cd TodoApp
 
 ```
 
-### 2. Create a Virtual Environment (Optional but Recommended)
+### 2. Create a Virtual Environment
 
 **Windows:**
 
@@ -66,13 +81,15 @@ pip install -r requirements.txt
 
 ### 4. Set up Environment Variables
 
-Create a `.env` file in the root directory to store your API keys securely.
+Create a `.env` file in the root directory to store your Google Gemini API Key.
 
 ```bash
 # .env file
-OPENAI_API_KEY=your_api_key_here
+GEMINI_API_KEY=your_actual_api_key_here
 
 ```
+
+*(You can get a free key from Google AI Studio)*
 
 ### 5. Run the App
 
@@ -89,13 +106,13 @@ The app will open in your default browser at `http://localhost:8501`.
 
 ```
 TodoApp/
-├── app.py              # Main application entry point (UI & Logic)
-├── database.py         # SQLite database handling (CRUD operations)
-├── ai_utils.py         # AI logic and API connections
+├── app.py              # Main application UI & Logic
+├── ai_utils.py         # Google Gemini AI integration logic
+├── database.py         # SQLite database handling (CRUD)
 ├── requirements.txt    # Project dependencies
-├── .env                # API Keys (Not uploaded to GitHub)
-├── .gitignore          # Files to ignore (e.g., venv, .env)
-└── README.md           # Project documentation
+├── .env                # API Keys (Protected, not on GitHub)
+├── .gitignore          # Security rules
+└── README.md           # Documentation
 
 ```
 
@@ -104,7 +121,7 @@ TodoApp/
 * **Frontend:** [Streamlit](https://streamlit.io/)
 * **Language:** Python
 * **Database:** SQLite (Built-in)
-* **AI Engine:** OpenAI API / Google Gemini (configurable)
+* **AI Engine:** Google Gemini (using `google-generativeai` library)
 
 ## 🛡️ Security Note
 
@@ -117,3 +134,7 @@ Contributions are welcome! Please fork the repository and create a pull request 
 ---
 
 **Developed by Roja Hasini**
+
+```
+
+```

@@ -1,68 +1,68 @@
 import os
+import google.generativeai as genai
 from dotenv import load_dotenv
-from openai import OpenAI
+import json
 
+# Load environment variables
 load_dotenv()
 
-client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+# Configure the Google AI
+api_key = os.getenv("GEMINI_API_KEY")
+genai.configure(api_key=api_key)
+
+def get_gemini_response(prompt):
+    """Helper function to talk to Gemini safely"""
+    if not api_key:
+        return "Error: API Key not found. Check your .env file."
+        
+    try:
+        # --- UPDATED MODEL NAME HERE ---
+        # We are using the model found in your specific list:
+        model = genai.GenerativeModel('gemini-2.5-flash-lite') 
+        response = model.generate_content(prompt)
+        
+        if not response.text:
+            return "Error: Empty response from AI."
+            
+        return response.text
+    except Exception as e:
+        return f"Error: {str(e)}"
 
 def ai_create_tasks(user_input):
     prompt = f"""
-Convert the following sentence into a JSON list of tasks.
-Each task must have:
-- title
-- due_date (YYYY-MM-DD if mentioned, else null)
+    You are a task management assistant.
+    Extract tasks from the user's input and return them as a JSON list.
+    
+    Rules:
+    1. Return ONLY raw JSON. No Markdown formatting (no ```json or ```).
+    2. Each item must have "title" (string) and "due_date" (string YYYY-MM-DD or null).
+    3. If you cannot find tasks, return an empty list: []
 
-Sentence:
-{user_input}
-"""
-
-    response = client.chat.completions.create(
-        model="gpt-4o-mini",
-        messages=[
-            {"role": "user", "content": prompt}
-        ]
-    )
-
-    return response.choices[0].message.content
-
+    User Input: "{user_input}"
+    """
+    response = get_gemini_response(prompt)
+    
+    # Clean up response
+    clean_response = response.replace("```json", "").replace("```", "").strip()
+    return clean_response
 
 def ai_prioritize_tasks(tasks):
     prompt = f"""
-Given the following tasks, prioritize them based on urgency and due date.
-Explain briefly.
-
-Tasks:
-{tasks}
-"""
-
-    response = client.chat.completions.create(
-        model="gpt-4o-mini",
-        messages=[
-            {"role": "user", "content": prompt}
-        ]
-    )
-
-    return response.choices[0].message.content
-
+    You are a productivity expert.
+    Given these tasks, prioritize them by urgency and importance.
+    Return a simple text explanation, not JSON.
+    
+    Tasks:
+    {tasks}
+    """
+    return get_gemini_response(prompt)
 
 def ai_daily_summary(tasks):
     prompt = f"""
-Create a daily productivity summary based on the following tasks.
-Include:
-- Completed tasks
-- Pending tasks
-- Suggested focus for today
-
-Tasks:
-{tasks}
-"""
-
-    response = client.chat.completions.create(
-        model="gpt-4o-mini",
-        messages=[
-            {"role": "user", "content": prompt}
-        ]
-    )
-
-    return response.choices[0].message.content
+    Create a friendly daily summary of these tasks.
+    Include a motivational quote.
+    
+    Tasks:
+    {tasks}
+    """
+    return get_gemini_response(prompt)
