@@ -2,14 +2,10 @@ import streamlit as st
 import database
 import datetime
 
-# ======================================================
-# PAGE CONFIG
-# ======================================================
+# Configure the main page settings like title and icon
 st.set_page_config(page_title="Roja's TODO App", page_icon="📝", layout="wide")
 
-# ======================================================
-# SESSION STATE
-# ======================================================
+# Initialize the session state to keep track of the current page and theme
 if "page" not in st.session_state:
     st.session_state.page = "Dashboard"
 if "ai_mode" not in st.session_state:
@@ -22,58 +18,54 @@ if "theme" not in st.session_state:
 def toggle_theme():
     st.session_state.theme = "dark" if st.session_state.theme == "light" else "light"
 
-# ======================================================
-# 🎨 COLOR PALETTE
-# ======================================================
+# Define the color palettes for light and dark mode
 if st.session_state.theme == "light":
-    # Light Mode Colors (Clean White/Slate)
-    BG_COLOR = "#F8FAFC"        # Slate-50
-    CARD_BG = "#FFFFFF"         # White
-    TEXT_COLOR = "#0F172A"      # Slate-900
-    SUBTEXT_COLOR = "#64748B"   # Slate-500
-    BORDER_COLOR = "#CBD5E1"    # Slate-300
-    ACCENT_COLOR = "#2563EB"    # Blue-600
+    # Colors for light mode
+    BG_COLOR = "#F8FAFC"        
+    CARD_BG = "#FFFFFF"         
+    TEXT_COLOR = "#0F172A"      
+    SUBTEXT_COLOR = "#64748B"   
+    BORDER_COLOR = "#CBD5E1"    
+    ACCENT_COLOR = "#2563EB"    
     
-    # Buttons & Inputs (Force White)
+    # Specific overrides for buttons and inputs
     BTN_BG = "#FFFFFF"          
     BTN_TEXT = "#0F172A"        
     INPUT_BG = "#FFFFFF"
     
     SHADOW = "0 4px 6px -1px rgba(0, 0, 0, 0.1)"
-    CARET_COLOR = "#0F172A"     # Dark Cursor
+    CARET_COLOR = "#0F172A"
 else:
-    # Dark Mode Colors
-    BG_COLOR = "#0F172A"        # Slate-900
-    CARD_BG = "#1E293B"         # Slate-800
-    TEXT_COLOR = "#F8FAFC"      # Slate-50
-    SUBTEXT_COLOR = "#94A3B8"   # Slate-400
-    BORDER_COLOR = "#334155"    # Slate-700
-    ACCENT_COLOR = "#60A5FA"    # Blue-400
+    # Colors for dark mode
+    BG_COLOR = "#0F172A"        
+    CARD_BG = "#1E293B"         
+    TEXT_COLOR = "#F8FAFC"      
+    SUBTEXT_COLOR = "#94A3B8"   
+    BORDER_COLOR = "#334155"    
+    ACCENT_COLOR = "#60A5FA"    
     
     BTN_BG = "#1E293B"          
     BTN_TEXT = "#F8FAFC"        
     INPUT_BG = "#334155"
     
     SHADOW = "0 4px 6px -1px rgba(0, 0, 0, 0.2)"
-    CARET_COLOR = "#F8FAFC"     # White Cursor
+    CARET_COLOR = "#F8FAFC"
 
-# ======================================================
-# 💅 CSS STYLING (FIXED CALENDAR HEADER & BUTTONS)
-# ======================================================
+# Apply custom CSS to make the app look better and fix some Streamlit quirks
 st.markdown(f"""
 <style>
-    /* 1. Main App Background */
+    /* Set the main background color */
     .stApp {{
         background-color: {BG_COLOR};
         color: {TEXT_COLOR};
     }}
 
-    /* 2. Global Text */
+    /* Force all text elements to use our theme color */
     p, h1, h2, h3, h4, h5, h6, span, div, label {{
         color: {TEXT_COLOR};
     }}
 
-    /* 3. Card Container */
+    /* Style the cards that hold content */
     .card {{
         background-color: {CARD_BG};
         padding: 1.5rem;
@@ -83,7 +75,7 @@ st.markdown(f"""
         box-shadow: {SHADOW};
     }}
 
-    /* 4. Header Container */
+    /* Style the top header bar */
     .header {{
         background-color: {CARD_BG};
         padding: 0.75rem 1.25rem;
@@ -101,7 +93,7 @@ st.markdown(f"""
         color: {TEXT_COLOR};
     }}
 
-    /* 5. UNIVERSAL BUTTON FIX (Targets ALL buttons: Popover, Form, Regular) */
+    /* Override default button styles to match our theme */
     button, 
     div[data-testid="stPopover"] > button,
     div[data-testid="stForm"] button {{
@@ -111,7 +103,7 @@ st.markdown(f"""
         box-shadow: 0 1px 2px 0 rgba(0,0,0,0.05);
     }}
     
-    /* Hover Effects */
+    /* Add hover effects to buttons */
     button:hover, 
     div[data-testid="stPopover"] > button:hover,
     div[data-testid="stForm"] button:hover {{
@@ -120,7 +112,7 @@ st.markdown(f"""
         background-color: {BG_COLOR} !important;
     }}
 
-    /* 6. INPUT FIELDS */
+    /* Style input fields and text areas */
     .stTextInput input, 
     .stTextArea textarea, 
     .stDateInput input, 
@@ -131,16 +123,12 @@ st.markdown(f"""
         caret-color: {CARET_COLOR} !important;
     }}
     
-    /* Widget Labels */
+    /* Ensure widget labels are visible */
     .stCheckbox label p, .stRadio label p, .stTextInput label p, .stDateInput label p {{
         color: {TEXT_COLOR} !important;
     }}
 
-    /* ============================================================ */
-    /* 🛠️ SPECIFIC FIXES FOR CALENDAR & POPOVER 🛠️ */
-    /* ============================================================ */
-
-    /* A. POPOVER BODY (White Box) */
+    /* Fix the popover background color so it isn't black */
     div[data-testid="stPopoverBody"] {{
         background-color: {CARD_BG} !important;
         border: 1px solid {BORDER_COLOR} !important;
@@ -150,39 +138,38 @@ st.markdown(f"""
         background-color: transparent !important;
     }}
 
-    /* B. CALENDAR HEADER FIX (The most important part!) */
-    /* Forces the main calendar container to be the card color */
+    /* Fix the calendar contrast issues in Light Mode */
     div[data-baseweb="calendar"] {{
         background-color: {CARD_BG} !important;
         color: {TEXT_COLOR} !important;
         border: 1px solid {BORDER_COLOR} !important;
     }}
     
-    /* Forces the Month/Year Header to be the card color (Fixes Black Header) */
+    /* Style the calendar header (Month/Year) */
     div[data-baseweb="calendar"] > div {{
         background-color: {CARD_BG} !important;
         color: {TEXT_COLOR} !important;
     }}
     
-    /* Targets the text inside the header (Month Year, Arrows) */
+    /* Color the text inside the calendar */
     div[data-baseweb="calendar"] button,
     div[data-baseweb="calendar"] div {{
         color: {TEXT_COLOR} !important;
     }}
 
-    /* Day Tiles (Standard) */
+    /* Make day tiles transparent by default */
     div[data-baseweb="day"] {{
         color: {TEXT_COLOR} !important;
         background-color: transparent !important;
     }}
     
-    /* Selected Day (Red/Blue Circle) */
+    /* Highlight the selected day */
     div[data-baseweb="day"][aria-selected="true"] {{
         background-color: {ACCENT_COLOR} !important;
         color: #ffffff !important;
     }}
 
-    /* C. DROPDOWNS */
+    /* Fix dropdown menus so they match the theme */
     ul[data-baseweb="menu"] {{
         background-color: {CARD_BG} !important;
         color: {TEXT_COLOR} !important;
@@ -195,22 +182,17 @@ st.markdown(f"""
 </style>
 """, unsafe_allow_html=True)
 
-# ======================================================
-# DB INIT
-# ======================================================
+# Make sure the database exists before we try to use it
 try:
     database.create_tables()
 except:
     pass
 
-# ======================================================
-# HEADER
-# ======================================================
+# Create the top header bar with title and navigation buttons
 st.markdown('<div class="header">', unsafe_allow_html=True)
 c1, c2, c3, c4, c5 = st.columns([4, 1.2, 1.2, 2, 0.6])
 
 with c1:
-    # UPDATED TITLE HERE
     st.markdown('<div class="app-title">📝 Roja\'s TODO App</div>', unsafe_allow_html=True)
 
 with c2:
@@ -222,7 +204,7 @@ with c3:
         st.session_state.page = "Add Task"
 
 with c4:
-    # Popover Button (Now Fixed via CSS)
+    # Popover menu for AI settings
     with st.popover(f"🤖 {st.session_state.ai_name}", use_container_width=True):
         st.markdown("**AI Settings**")
         st.session_state.ai_name = st.text_input("Name", st.session_state.ai_name)
@@ -240,16 +222,14 @@ with c5:
 
 st.markdown("</div>", unsafe_allow_html=True)
 
-# ======================================================
-# DASHBOARD
-# ======================================================
+# Function to show the main dashboard
 def show_dashboard():
     st.markdown("### 📊 Task Dashboard")
     st.markdown("---")
 
     pending_tab, achieved_tab = st.tabs(["🕒 Pending Tasks", "✅ Achieved Tasks"])
 
-    # -------- PENDING --------
+    # Show the pending tasks tab
     with pending_tab:
         tasks = database.get_tasks("pending")
         if not tasks:
@@ -258,17 +238,17 @@ def show_dashboard():
             for t in tasks:
                 st.markdown('<div class="card">', unsafe_allow_html=True)
                 
-                # Title
+                # Show title and description
                 st.markdown(f"<div style='font-weight:600; font-size:1.1rem; margin-bottom:5px;'>{t[1]}</div>", unsafe_allow_html=True)
                 if t[2]:
                     st.markdown(f"<div style='color:{SUBTEXT_COLOR}; font-size:0.9rem;'>{t[2]}</div>", unsafe_allow_html=True)
                 
-                # Date
+                # Show due date
                 st.markdown(f"<div style='color:{SUBTEXT_COLOR}; font-size:0.85rem; margin-top:10px;'>📅 Due: {t[3]}</div>", unsafe_allow_html=True)
                 
                 st.write("") 
 
-                # Actions
+                # Buttons to complete or delete the task
                 c_check, c_bin = st.columns([4, 0.5])
                 with c_check:
                     if st.checkbox("Mark as Done", key=f"done_{t[0]}"):
@@ -281,7 +261,7 @@ def show_dashboard():
                 
                 st.markdown("</div>", unsafe_allow_html=True) 
 
-    # -------- ACHIEVED --------
+    # Show the completed tasks tab
     with achieved_tab:
         tasks = database.get_tasks("completed")
         if not tasks:
@@ -306,9 +286,7 @@ def show_dashboard():
 
                 st.markdown("</div>", unsafe_allow_html=True)
 
-# ======================================================
-# ADD TASK
-# ======================================================
+# Function to display the form for adding a new task
 def show_add_task():
     st.markdown('<div class="card">', unsafe_allow_html=True)
     st.markdown("### ➕ Create New Task")
@@ -318,7 +296,6 @@ def show_add_task():
         desc = st.text_area("Description", placeholder="Add details...")
         date = st.date_input("Due Date", datetime.date.today())
         
-        # Submit Button (Now Fixed via CSS)
         if st.form_submit_button("Save Task", use_container_width=True):
             if title:
                 database.add_task(title, desc, date.isoformat())
@@ -329,9 +306,7 @@ def show_add_task():
                 st.warning("Please add a title.")
     st.markdown("</div>", unsafe_allow_html=True)
 
-# ======================================================
-# AI PAGE
-# ======================================================
+# Placeholder for the AI features page
 def show_ai():
     st.markdown('<div class="card">', unsafe_allow_html=True)
     st.markdown(f"### 🤖 {st.session_state.ai_mode}")
@@ -342,9 +317,7 @@ def show_ai():
         st.rerun()
     st.markdown("</div>", unsafe_allow_html=True)
 
-# ======================================================
-# ROUTER
-# ======================================================
+# Determine which page to show based on the current state
 if st.session_state.page == "Dashboard":
     show_dashboard()
 elif st.session_state.page == "Add Task":
