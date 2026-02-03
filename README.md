@@ -4,11 +4,6 @@
 A smart, AI-powered task management application built with **Python**, **Streamlit**, and **Google Gemini**. 
 This app combines a modern, responsive UI with advanced AI capabilities to help you organize, prioritize, and track your daily tasks efficiently.
 
-![Python](https://img.shields.io/badge/Python-3.9%2B-blue)
-![Streamlit](https://img.shields.io/badge/Streamlit-1.31%2B-ff4b4b)
-![AI](https://img.shields.io/badge/AI-Google%20Gemini-orange)
-![Status](https://img.shields.io/badge/Status-Active-success)
-
 ## ✨ Features
 
 ### 🎨 Modern UI & Theming
@@ -134,7 +129,3 @@ Contributions are welcome! Please fork the repository and create a pull request 
 ---
 
 **Developed by Roja Hasini**
-
-```
-
-```
